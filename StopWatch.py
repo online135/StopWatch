@@ -11,21 +11,30 @@ from datetime import datetime
 
 def run():
     global Lapse
-    global index
     current_time = datetime.now()
     diff = current_time - start_time
     txt_var.set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
 
     if Lapse:
-        print(index)
         Lapse = False
+        index = indexcheck()
         txt_var2[index].set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
         timeLapseText[index] = txt_var2[index]
         tk.Label(root, textvariable=timeLapseText[index], font = fontStyle).pack(fill = 'x')
-        index += 1     # there still have a bug at here, don't click Button timeLapse more than 5 times
         
     if running:
         root.after(20,run) #to reschedule after 20ms
+
+def indexcheck():
+    global index
+    
+    if index < 4:
+        index += 1
+        return index
+    
+    else:
+        index = 0
+        return index
 
 def start():
     global running
@@ -55,10 +64,10 @@ def timeLapse():
 running = False
 start_time = None
 Lapse = False
-index = 0
+index = -1
 
 root = tk.Tk()
-root.geometry("500x2000") #width x height
+root.geometry("500x540") #width x height
 root.title("StopWatch")
 
 txt_var = tk.StringVar()
