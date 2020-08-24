@@ -11,6 +11,7 @@ from datetime import datetime
 
 def run():
     global Lapse
+
     current_time = datetime.now()
     diff = current_time - start_time
     txt_var.set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
@@ -39,10 +40,13 @@ def indexcheck():
 def start():
     global running
     global start_time
+    global reflag
 
     if not running:
         running = True
-        start_time = datetime.now()
+        if reflag == False:
+            start_time = datetime.now()
+            reflag = True
         root.after(10,run)
 
 def stop():
@@ -51,7 +55,10 @@ def stop():
 
 def reset():
     global start_time
+    global reflag
+
     start_time = datetime.now()
+    reflag = False    
 
     if not running:
         txt_var.set('0.00')
@@ -65,6 +72,7 @@ running = False
 start_time = None
 Lapse = False
 index = -1
+reflag = False
 
 root = tk.Tk()
 root.geometry("500x540") #width x height
