@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun August 24 13:23:17 2020
+Created on Sun August 24 15:23:17 2020
 
 @author: online135
 """
@@ -11,6 +11,7 @@ from datetime import datetime
 
 def run():
     global Lapse
+    global number
 
     current_time = datetime.now()
     diff = current_time - start_time
@@ -19,9 +20,10 @@ def run():
     if Lapse:
         Lapse = False  # flag
         index = indexcheck()
-        txt_var2[index].set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
+        txt_var2[index].set('%d : %d.%02d' % (number, diff.seconds, diff.microseconds//10000))
         timeLapseText[index] = txt_var2[index]  # store value in the new list, that each value will not interrupt with each other.
         tk.Label(root, textvariable=timeLapseText[index], font = fontStyle).pack(fill = 'x')
+        number += 1
         
     if running:
         root.after(20,run) #to reschedule after 20ms
@@ -56,8 +58,10 @@ def stop():
 def reset():
     global start_time
     global reflag
+    global number
 
     start_time = datetime.now()
+    number = 1
     reflag = False    
 
     if not running:
@@ -73,6 +77,7 @@ start_time = None
 Lapse = False
 index = -1
 reflag = False
+number = 1
 
 root = tk.Tk()
 root.geometry("500x540") #width x height
