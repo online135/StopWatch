@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun August 23 19:43:06 2020
+Created on Sun August 24 15:23:17 2020
 
 @author: online135
 """
@@ -16,10 +16,10 @@ def run():
     txt_var.set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
 
     if Lapse:
-        Lapse = False
+        Lapse = False  # flag
         index = indexcheck()
         txt_var2[index].set('%d.%02d' % (diff.seconds, diff.microseconds//10000))
-        timeLapseText[index] = txt_var2[index]
+        timeLapseText[index] = txt_var2[index]  # store value in the new list, that each value will not interrupt with each other.
         tk.Label(root, textvariable=timeLapseText[index], font = fontStyle).pack(fill = 'x')
         
     if running:
@@ -75,9 +75,14 @@ txt_var.set('0.00')
 fontStyle = TkFont.Font(family="Lucida Grande", size = 50)
 tk.Label(root, textvariable=txt_var, font = fontStyle).pack()
 
+
+'''
+Use list to store 5 Time Lapse Value, and rotate it
+
+'''
 timeLapseText = [None for i in range(5)]
 
-txt_var2 = [tk.StringVar() for i in range(5)]
+txt_var2 = [tk.StringVar() for i in range(5)]  
 for txt in txt_var2:
     txt.set('0.00')
 
